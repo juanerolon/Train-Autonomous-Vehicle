@@ -1,5 +1,6 @@
 import random
 import math
+import numpy as np
 from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
@@ -56,9 +57,10 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         
-        # NOTE : you are not allowed to engineer eatures outside of the inputs available.
+        # NOTE : you are not allowed to engineer features outside of the inputs available.
         # Because the aim of this project is to teach Reinforcement Learning, we have placed 
-        # constraints in order for you to learn how to adjust epsilon and alpha, and thus learn about the balance between exploration and exploitation.
+        # constraints in order for you to learn how to adjust epsilon and alpha, and thus learn about
+        # the balance between exploration and exploitation.
         # With the hand-engineered features, this learning process gets entirely negated.
         
         # Set 'state' as a tuple of relevant data for the agent        
@@ -76,7 +78,7 @@ class LearningAgent(Agent):
         ###########
         # Calculate the maximum Q-value of all actions for a given state
 
-        maxQ = None
+        maxQ = np.max(self.Q.values())
 
         return maxQ 
 
@@ -110,6 +112,22 @@ class LearningAgent(Agent):
         # When learning, choose a random action with 'epsilon' probability
         # Otherwise, choose an action with the highest Q-value for the current state
         # Be sure that when choosing an action with highest Q-value that you randomly select between actions that "tie".
+
+
+        if self.learning:
+            if random.random() <= self.epsilon:
+                action = random.choice(self.valid_actions)
+            else:
+                pass
+        elif:
+            action = self.valid_actions[random.randint(0,len(self.valid_actions))]
+        else:
+            action =
+
+
+
+
+
         return action
 
 
