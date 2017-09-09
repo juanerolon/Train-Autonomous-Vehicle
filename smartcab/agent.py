@@ -5,6 +5,13 @@ from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
 
+class LearningStateError(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return repr(self.value)
+
 class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
         This is the object you will be modifying. """ 
@@ -112,20 +119,6 @@ class LearningAgent(Agent):
         # When learning, choose a random action with 'epsilon' probability
         # Otherwise, choose an action with the highest Q-value for the current state
         # Be sure that when choosing an action with highest Q-value that you randomly select between actions that "tie".
-
-
-        if self.learning:
-            if random.random() <= self.epsilon:
-                action = random.choice(self.valid_actions)
-            else:
-                pass
-        elif:
-            action = self.valid_actions[random.randint(0,len(self.valid_actions))]
-        else:
-            action =
-
-
-
 
 
         return action
