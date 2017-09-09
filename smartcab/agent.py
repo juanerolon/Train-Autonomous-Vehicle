@@ -76,18 +76,20 @@ class LearningAgent(Agent):
         return state
     
     def invert_dict(self, d):
-    """Inverts a dictionary. Stores in a list keys that share
-       a common value. Example: will help to store in a list the actions
-       that have the same Q-value when called from get_maxQ - J.E. Rolon"""
-
-    inverse = dict()
-    for key in d:
-        val = d[key]
-        if val not in inverse:
-            inverse[val] = [key]
-        else:
-            inverse[val].append(key)
-    return inverse
+        """
+        Inverts a dictionary. Stores in a list keys that share
+        a common value. Example: will help to store in a list the actions
+        that have the same Q-value when called from get_maxQ - J.E. Rolon
+        """
+        
+        inverse = dict()
+        for key in d:
+            val = d[key]
+            if val not in inverse:
+                inverse[val] = [key]
+            else:
+                inverse[val].append(key)
+        return inverse
 
 
     def get_maxQ(self, state):
