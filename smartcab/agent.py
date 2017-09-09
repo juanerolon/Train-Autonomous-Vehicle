@@ -129,14 +129,26 @@ class LearningAgent(Agent):
         self.next_waypoint = self.planner.next_waypoint()
         action = None
 
-        ########### 
-        ## TO DO ##
-        ###########
         # When not learning, choose a random action
         # When learning, choose a random action with 'epsilon' probability
         # Otherwise, choose an action with the highest Q-value for the current state
         # Be sure that when choosing an action with highest Q-value that you randomly select between actions that "tie".
+        
+        if self.learning == False:
+            action = np.random.choice(self.valid_actions)
+        elif self.learning == True:
+            r = np.random.random_sample()
+            if r <= self.epsilon:
+                action = np.random.choice(self.valid_actions)
+            else:
+                maxQ, maxQactions = self.get_maxQ(state)
 
+                if len(maxQactions) > 1:
+                    action = np.random.choice(maxQactions[maxQ])
+                else:
+                    action = maxQactions[maxQ][0]
+        else:
+            raise LearningStateError("Learning state is ill-defined")
 
         return action
 
