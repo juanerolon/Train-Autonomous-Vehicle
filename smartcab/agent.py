@@ -31,7 +31,8 @@ class LearningAgent(Agent):
 
         # Set any additional class parameters as needed
 
-        self.trial_time = 0.0
+        self.trial_time = 0.0          #Trial time counter for implementing time dependent epsilon decay
+        self.optimal_actions = None    #Action(s) corresponding to maximum Q value (see get_maxQ)
 
 
     def reset(self, destination=None, testing=False):
@@ -104,12 +105,12 @@ class LearningAgent(Agent):
 
         sinv = self.invert_dict(self.Q[state])
         maxQ_value = max(sinv.keys())
-        maxQ_actions = sinv[maxQ_value]
+        self.optimal_actions = sinv[maxQ_value]
 
         # Calculate the maximum Q-value of all actions for a given state
         # Two ore more actions may have the same max Q-value
 
-        return maxQ_value, maxQ_actions
+        return maxQ_value
 
 
     def createQ(self, state):
@@ -149,12 +150,12 @@ class LearningAgent(Agent):
             if r <= self.epsilon:
                 action = np.random.choice(self.valid_actions)
             else:
-                maxQ, maxQactions = self.get_maxQ(state)
+                maxQ = self.get_maxQ(state)
 
-                if len(maxQactions) > 1:
-                    action = np.random.choice(maxQactions)
+                if len(self.optimal_actions) > 1:
+                    action = np.random.choice(self.optimal_actions)
                 else:
-                    action = maxQactions[0]
+                    action = self.optimal_actions[0]
         else:
             raise LearningStateError("Learning state is ill-defined")
 
