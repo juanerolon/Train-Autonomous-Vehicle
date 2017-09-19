@@ -53,13 +53,32 @@ ax = plt.axes()
 plt.xlim(-1.2,1.2)
 plt.ylim(-0.8,1.8)
 
-#green traffic light
-circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='lime')
-plt.gca().add_patch(circle)
+def traffic_light(light_color):
 
-#red traffic light
-circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='r')
-plt.gca().add_patch(circle2)
+    if light_color == 'green':
+
+        #green traffic light
+        circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='lime')
+        plt.gca().add_patch(circle)
+
+        #red traffic light
+        circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='gray', linestyle='dashed',fill=False)
+        plt.gca().add_patch(circle2)
+
+    elif light_color == 'red':
+
+        # green traffic light
+        circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='gray', linestyle='dashed',fill=False)
+        plt.gca().add_patch(circle)
+
+        # red traffic light
+        circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='r')
+        plt.gca().add_patch(circle2)
+    else:
+        raise Exception('Invalid traffic light state')
+
+traffic_light('green')
+
 
 #intersection point
 intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False,linestyle='dashed')
