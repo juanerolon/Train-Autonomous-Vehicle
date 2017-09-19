@@ -49,9 +49,21 @@ for s in sample:
 #Plotting cartoons
 
 
-ax = plt.axes()
-plt.xlim(-1.2,1.2)
-plt.ylim(-0.8,1.8)
+def create_canvas(xi, xf, yi, yf, itx, ity, axlabels):
+
+    # frame
+    ax = plt.axes()
+    plt.xlim(xi, xf)
+    plt.ylim(yi, yf)
+
+    # intersection point
+    intersect = plt.Circle((itx, ity), radius=0.05, fc='k', fill=False, linestyle='dashed')
+    plt.gca().add_patch(intersect)
+
+    # show axis (off, on)
+    ax.axis(axlabels)
+
+    return ax
 
 def traffic_light(light_color):
 
@@ -77,12 +89,9 @@ def traffic_light(light_color):
     else:
         raise Exception('Invalid traffic light state')
 
+ax = create_canvas(-1.2, 1.2, -0.8, 1.8, 0.05, 0.55,'on')
 traffic_light('green')
 
-
-#intersection point
-intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False,linestyle='dashed')
-plt.gca().add_patch(intersect)
 
 #maxQ action enclosing rectangle
 maxq_rect = plt.Rectangle((0.45, 1.2),0.5,0.55,fill=False)
@@ -213,6 +222,6 @@ if True:
     plt.text(0.63, 1.45, 'Idle', fontsize='12', fontweight='bold', color='darkgreen')
     plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
 
-#ax.axis('off')
+
 plt.show()
 
