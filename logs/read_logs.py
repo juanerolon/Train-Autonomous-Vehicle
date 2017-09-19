@@ -65,6 +65,9 @@ plt.gca().add_patch(circle2)
 intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False,linestyle='dashed')
 plt.gca().add_patch(intersect)
 
+#maxQ action enclosing rectangle
+maxq_rect = plt.Rectangle((0.45, 1.2),0.5,0.55,fill=False)
+plt.gca().add_patch(maxq_rect)
 
 #input left
 plt.plot((-0.7, -0.3), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')
