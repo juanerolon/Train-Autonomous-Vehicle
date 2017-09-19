@@ -102,7 +102,7 @@ def percept_input(input):
         #input forward
         plt.plot((0.05, 0.05), (0.0, 0.45), lw=2, color='gray', clip_on=True,linestyle='dashed')
         plt.text(-0.05,0.40,'Input foward', rotation='vertical', fontsize='9',color='gray')
-    elif input == None:
+    elif input == None or 'None':
         pass
     else:
         raise Exception('Invalid percept input')
@@ -140,7 +140,7 @@ def oncoming_traffic(ax, direction):
         ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
         plt.text(0.45,0.6,'Oncoming right',fontsize='9')
 
-    elif direction == None:
+    elif direction == None or 'None':
         pass
     else:
         raise Exception('Invalid oncomming traffic percept')
@@ -189,7 +189,7 @@ def waypoint(direction):
         ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
         plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
 
-    elif direction == None:
+    elif direction == None or 'None':
         pass
     else:
         raise Exception('Invalid waypoint percept')
@@ -243,7 +243,7 @@ def maxQ_action(action):
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
 
     # maxQ action None (idle)
-    elif action == None:
+    elif action == None or 'None':
         plt.text(0.63, 1.45, 'Idle', fontsize='12', fontweight='bold', color='darkgreen')
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
     else:
