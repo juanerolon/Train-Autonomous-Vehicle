@@ -148,12 +148,51 @@ if False:
     plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
 
 # maxQ action forward
-xi = 0.7
-yi = 1.35
-dx = 0.0
-dy = 0.3
-ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
-plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+if False:
+    xi = 0.7
+    yi = 1.35
+    dx = 0.0
+    dy = 0.3
+    ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+
+# maxQ action left
+if False:
+    xi = 0.7
+    yi = 1.35
+    dx = 0.0
+    dy = 0.15
+    ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+    xi2 = 0.7
+    yi2 = 1.55
+    dx2 = -0.1
+    dy2 = 0.0
+    ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+             linewidth=3.5)
+
+    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+
+# maxQ action right
+if False:
+    xi = 0.7
+    yi = 1.35
+    dx = 0.0
+    dy = 0.15
+    ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+    xi2 = 0.7
+    yi2 = 1.55
+    dx2 = 0.1
+    dy2 = 0.0
+    ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+             linewidth=3.5)
+
+    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+
+# maxQ action None (idle)
+if True:
+
+    plt.text(0.63, 1.45, 'Idle', fontsize='12', fontweight='bold', color='darkgreen')
+    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
 
 #ax.axis('off')
 plt.show()
