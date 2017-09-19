@@ -145,53 +145,60 @@ def oncoming_traffic(ax, direction):
     else:
         raise Exception('Invalid oncomming traffic percept')
 
+def waypoint(direction):
+
+    #waypoint foward
+    if direction=='forward':
+        xi = 0.05
+        yi = -0.5
+        dx = 0.0
+        dy = 0.3
+        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
+
+
+    #waypoint right
+    elif direction == 'right':
+        # ---- base
+        xi = 0.05
+        yi = -0.5
+        dx = 0.0
+        dy = 0.15
+        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        # ---- tip
+        xi2 = 0.05
+        yi2 = -0.3
+        dx2 = 0.1
+        dy2 = 0.0
+        ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
+
+    #waypoint left
+    elif direction=='left':
+        # ---- base
+        xi = 0.05
+        yi = -0.5
+        dx = 0.0
+        dy = 0.15
+        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        # ---- tip
+        xi2 = 0.05
+        yi2 = -0.3
+        dx2 = -0.1
+        dy2 = 0.0
+        ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
+
+    elif direction == None:
+        pass
+    else:
+        raise Exception('Invalid waypoint percept')
+
 ax = create_canvas('on')
 traffic_light('green')
 percept_input('left')
 oncoming_traffic(ax, 'right')
-
-
-#waypoint foward
-if True:
-    xi = 0.05
-    yi = -0.5
-    dx = 0.0
-    dy = 0.3
-    ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
-    plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
-
-
-#waypoint right
-if False:
-    # ---- base
-    xi = 0.05
-    yi = -0.5
-    dx = 0.0
-    dy = 0.15
-    ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
-    # ---- tip
-    xi2 = 0.05
-    yi2 = -0.3
-    dx2 = 0.1
-    dy2 = 0.0
-    ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
-    plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
-
-#waypoint left
-if False:
-    # ---- base
-    xi = 0.05
-    yi = -0.5
-    dx = 0.0
-    dy = 0.15
-    ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
-    # ---- tip
-    xi2 = 0.05
-    yi2 = -0.3
-    dx2 = -0.1
-    dy2 = 0.0
-    ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
-    plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
+waypoint('right')
 
 # maxQ action enclosing rectangle
 maxq_rect = plt.Rectangle((0.45, 1.2), 0.5, 0.55, fill=False)
