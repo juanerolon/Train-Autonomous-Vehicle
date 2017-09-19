@@ -53,7 +53,6 @@ ax = plt.axes()
 plt.xlim(-1.2,1.2)
 plt.ylim(-0.8,1.8)
 
-
 circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='g')
 plt.gca().add_patch(circle)
 
@@ -70,28 +69,29 @@ plt.plot((0.05, 0.05), (0.0, 0.45), lw=2, color='gray', clip_on=True,linestyle='
 
 
 
-
+#oncoming left
 xi = -0.8
 yi = 0.5
 dx = 0.4
 dy = 0.0
-
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='r', ec='r')
+plt.text(-0.8,0.6,'Oncoming left', rotation='horizontal', fontsize='9')
 
+# oncoming forward
 xi = 0.05
 yi = 1.2
 dx = 0.0
 dy = -0.4
-
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+plt.text(-0.05,1.5,'Oncoming forward', rotation='vertical', fontsize='9')
 
+#oncoming right
 xi =0.9
 yi = 0.5
 dx = -0.4
 dy = 0.0
-
-
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='g', ec='g')
+plt.text(0.45,0.6,'Oncoming right',fontsize='9')
 
 xi = 0.05
 yi = -0.5
