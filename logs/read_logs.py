@@ -98,12 +98,30 @@ dy = 0.0
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='g', ec='g')
 plt.text(0.45,0.6,'Oncoming right',fontsize='9')
 
-#waypoint
+
+
+#waypoint foward
+if False:
+    xi = 0.05
+    yi = -0.5
+    dx = 0.0
+    dy = 0.3
+    ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+    plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
+
+
+#waypoint right
 xi = 0.05
 yi = -0.5
 dx = 0.0
-dy = 0.3
+dy = 0.15
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+xi2 = 0.05
+yi2 = -0.3
+dx2 = 0.1
+dy2 = 0.0
+ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+
 plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
 
 #ax.axis('off')
