@@ -194,63 +194,67 @@ def waypoint(direction):
     else:
         raise Exception('Invalid waypoint percept')
 
+
+def maxQ_action(action):
+
+    # maxQ action enclosing rectangle
+    maxq_rect = plt.Rectangle((0.45, 1.2), 0.5, 0.55, fill=False)
+    plt.gca().add_patch(maxq_rect)
+
+    # maxQ action forward
+    if action == 'forward':
+        xi = 0.7
+        yi = 1.35
+        dx = 0.0
+        dy = 0.3
+        ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+        plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+
+    # maxQ action left
+    elif action == 'left':
+        xi = 0.7
+        yi = 1.35
+        dx = 0.0
+        dy = 0.15
+        ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+        xi2 = 0.7
+        yi2 = 1.55
+        dx2 = -0.1
+        dy2 = 0.0
+        ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+                 linewidth=3.5)
+
+        plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+
+    # maxQ action right
+    elif action == 'right':
+        xi = 0.7
+        yi = 1.35
+        dx = 0.0
+        dy = 0.15
+        ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+        xi2 = 0.7
+        yi2 = 1.55
+        dx2 = 0.1
+        dy2 = 0.0
+        ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+                 linewidth=3.5)
+
+        plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+
+    # maxQ action None (idle)
+    elif action == None:
+        plt.text(0.63, 1.45, 'Idle', fontsize='12', fontweight='bold', color='darkgreen')
+        plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+    else:
+        raise Exception('Invalid maxQ action')
+
 ax = create_canvas('on')
 traffic_light('green')
 percept_input('left')
 oncoming_traffic(ax, 'right')
 waypoint('right')
-
-# maxQ action enclosing rectangle
-maxq_rect = plt.Rectangle((0.45, 1.2), 0.5, 0.55, fill=False)
-plt.gca().add_patch(maxq_rect)
-
-
-# maxQ action forward
-if False:
-    xi = 0.7
-    yi = 1.35
-    dx = 0.0
-    dy = 0.3
-    ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
-    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
-
-# maxQ action left
-if False:
-    xi = 0.7
-    yi = 1.35
-    dx = 0.0
-    dy = 0.15
-    ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
-    xi2 = 0.7
-    yi2 = 1.55
-    dx2 = -0.1
-    dy2 = 0.0
-    ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
-             linewidth=3.5)
-
-    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
-
-# maxQ action right
-if False:
-    xi = 0.7
-    yi = 1.35
-    dx = 0.0
-    dy = 0.15
-    ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
-    xi2 = 0.7
-    yi2 = 1.55
-    dx2 = 0.1
-    dy2 = 0.0
-    ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
-             linewidth=3.5)
-
-    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
-
-# maxQ action None (idle)
-if True:
-
-    plt.text(0.63, 1.45, 'Idle', fontsize='12', fontweight='bold', color='darkgreen')
-    plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+maxQ_action('forward')
 
 
 plt.show()
