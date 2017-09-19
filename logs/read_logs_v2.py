@@ -49,15 +49,14 @@ for s in sample:
 #Plotting cartoons
 
 
-def create_canvas(xi, xf, yi, yf, itx, ity, axlabels):
-
+def create_canvas(axlabels):
     # frame
     ax = plt.axes()
-    plt.xlim(xi, xf)
-    plt.ylim(yi, yf)
+    plt.xlim(-1.2, 1.2)
+    plt.ylim(-0.8, 1.8)
 
     # intersection point
-    intersect = plt.Circle((itx, ity), radius=0.05, fc='k', fill=False, linestyle='dashed')
+    intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False, linestyle='dashed')
     plt.gca().add_patch(intersect)
 
     # show axis (off, on)
@@ -89,48 +88,67 @@ def traffic_light(light_color):
     else:
         raise Exception('Invalid traffic light state')
 
-ax = create_canvas(-1.2, 1.2, -0.8, 1.8, 0.05, 0.55,'on')
+def percept_input(input):
+
+    if input == 'left':
+        #input left
+        plt.plot((-0.7, -0.3), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')
+        plt.text(-0.65,-0.15,'Input left', rotation='horizontal', fontsize='9',color='gray')
+    elif input == 'right':
+        #input right
+        plt.plot((0.4, 0.8), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')
+        plt.text(0.45,-0.15,'Input right', rotation='horizontal', fontsize='9',color='gray')
+    elif input == 'forward':
+        #input forward
+        plt.plot((0.05, 0.05), (0.0, 0.45), lw=2, color='gray', clip_on=True,linestyle='dashed')
+        plt.text(-0.05,0.40,'Input foward', rotation='vertical', fontsize='9',color='gray')
+    elif input == None:
+        pass
+    else:
+        raise Exception('Invalid percept input')
+
+
+def oncoming_traffic(ax, direction):
+
+    if direction == 'left':
+
+        #oncoming left
+        xi = -0.8
+        yi = 0.5
+        dx = 0.4
+        dy = 0.0
+        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.text(-0.8,0.6,'Oncoming left', rotation='horizontal', fontsize='9')
+
+    elif direction == 'forward':
+
+        #oncoming forward
+        xi = 0.05
+        yi = 1.2
+        dx = 0.0
+        dy = -0.4
+        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.text(-0.05,1.5,'Oncoming forward', rotation='vertical', fontsize='9')
+
+    elif direction == 'right':
+
+        #oncoming right
+        xi =0.9
+        yi = 0.5
+        dx = -0.4
+        dy = 0.0
+        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.text(0.45,0.6,'Oncoming right',fontsize='9')
+
+    elif direction == None:
+        pass
+    else:
+        raise Exception('Invalid oncomming traffic percept')
+
+ax = create_canvas('on')
 traffic_light('green')
-
-
-#maxQ action enclosing rectangle
-maxq_rect = plt.Rectangle((0.45, 1.2),0.5,0.55,fill=False)
-plt.gca().add_patch(maxq_rect)
-
-#input left
-plt.plot((-0.7, -0.3), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')
-plt.text(-0.65,-0.15,'Input left', rotation='horizontal', fontsize='9',color='gray')
-#input right
-plt.plot((0.4, 0.8), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')
-plt.text(0.45,-0.15,'Input right', rotation='horizontal', fontsize='9',color='gray')
-#input forward
-plt.plot((0.05, 0.05), (0.0, 0.45), lw=2, color='gray', clip_on=True,linestyle='dashed')
-plt.text(-0.05,0.40,'Input foward', rotation='vertical', fontsize='9',color='gray')
-
-
-#oncoming left
-xi = -0.8
-yi = 0.5
-dx = 0.4
-dy = 0.0
-ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='r', ec='r')
-plt.text(-0.8,0.6,'Oncoming left', rotation='horizontal', fontsize='9')
-
-#oncoming forward
-xi = 0.05
-yi = 1.2
-dx = 0.0
-dy = -0.4
-ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
-plt.text(-0.05,1.5,'Oncoming forward', rotation='vertical', fontsize='9')
-
-#oncoming right
-xi =0.9
-yi = 0.5
-dx = -0.4
-dy = 0.0
-ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='g', ec='g')
-plt.text(0.45,0.6,'Oncoming right',fontsize='9')
+percept_input('left')
+oncoming_traffic(ax, 'right')
 
 
 #waypoint foward
@@ -174,6 +192,11 @@ if False:
     dy2 = 0.0
     ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
     plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
+
+# maxQ action enclosing rectangle
+maxq_rect = plt.Rectangle((0.45, 1.2), 0.5, 0.55, fill=False)
+plt.gca().add_patch(maxq_rect)
+
 
 # maxQ action forward
 if False:
