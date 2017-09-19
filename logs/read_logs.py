@@ -59,14 +59,19 @@ plt.gca().add_patch(circle)
 circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='r')
 plt.gca().add_patch(circle2)
 
-intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=True)
+intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False,linestyle='dashed')
 plt.gca().add_patch(intersect)
 
 
-plt.plot((-0.7, -0.3), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed') #left
-plt.plot((0.4, 0.8), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')   #right
-plt.plot((0.05, 0.05), (0.0, 0.45), lw=2, color='gray', clip_on=True,linestyle='dashed')   #vertical
-
+#input left
+plt.plot((-0.7, -0.3), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')
+plt.text(-0.65,-0.15,'Input left', rotation='horizontal', fontsize='9',color='gray')
+#input right
+plt.plot((0.4, 0.8), (-0.2, -0.2), lw=2, color='gray', clip_on=True,linestyle='dashed')
+plt.text(0.45,-0.15,'Input right', rotation='horizontal', fontsize='9',color='gray')
+#input forward
+plt.plot((0.05, 0.05), (0.0, 0.45), lw=2, color='gray', clip_on=True,linestyle='dashed')
+plt.text(-0.05,0.40,'Input foward', rotation='vertical', fontsize='9',color='gray')
 
 
 #oncoming left
@@ -77,7 +82,7 @@ dy = 0.0
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='r', ec='r')
 plt.text(-0.8,0.6,'Oncoming left', rotation='horizontal', fontsize='9')
 
-# oncoming forward
+#oncoming forward
 xi = 0.05
 yi = 1.2
 dx = 0.0
@@ -93,13 +98,13 @@ dy = 0.0
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='g', ec='g')
 plt.text(0.45,0.6,'Oncoming right',fontsize='9')
 
+#waypoint
 xi = 0.05
 yi = -0.5
 dx = 0.0
 dy = 0.3
-
 ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
-
+plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
 
 #ax.axis('off')
 plt.show()
