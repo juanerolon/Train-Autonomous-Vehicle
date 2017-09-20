@@ -10,8 +10,10 @@ def qtable_sample(fname,nsamples):
     span = len(f.readlines())
     f.seek(0)
     state_maxQ_list = []
+    state_maxQ_ldicts = []
     for i in range(span):
         tmp_entry = []
+        tmp_dict = {}
         str_line = f.readline()
         if "('" in str_line:
             lst1 = []
@@ -28,16 +30,27 @@ def qtable_sample(fname,nsamples):
             index, value = max(enumerate(lst2), key=operator.itemgetter(1))
             state = eval(str_line.rstrip())
             wypt = state[0]
-            inps = (state[1],state[2],state[3])
+            inps = (state[1], state[2],state[3],state[4])
             acts = zip(lst1, lst2)
             maxq_act = lst1[index]
             tmp_entry.append(wypt)
             tmp_entry.append(inps)
             tmp_entry.append(acts)
             tmp_entry.append(maxq_act)
-            state_maxQ_list.append(tmp_entry)
 
-    return random.sample(state_maxQ_list,nsamples)
+            tmp_dict['waypoint'] = wypt
+            tmp_dict['inp_light'] =inps[0]
+            tmp_dict['inp_left'] = inps[1]
+            tmp_dict['oncoming'] = inps[2]
+            tmp_dict['inp_right'] =inps[3]
+            tmp_dict['avail_actions'] = acts
+            tmp_dict['maxQaction'] = maxq_act
+
+            state_maxQ_list.append(tmp_entry)
+            state_maxQ_ldicts.append(tmp_dict)
+
+
+    return random.sample(state_maxQ_ldicts,nsamples)
 
 #Plotting functions
 def create_canvas(axlabels):
@@ -270,7 +283,9 @@ def create_qsample_fig(obs):
 
 #state = (waypoint, inputs['light'], inputs['oncoming'], inputs['left'], inputs['right'])
 sample = qtable_sample('sim_improved-learning.txt',5)
-print sample[0]
+
+for d in sample:
+    print d
 
 
 
