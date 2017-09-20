@@ -201,7 +201,7 @@ def maxQ_action(action):
         raise Exception('Invalid maxQ action')
 
 #Test functions above:
-if True:
+if False:
 
     plt.figure(1,figsize=(12, 6))
 
@@ -213,8 +213,6 @@ if True:
     oncoming_traffic('right')
     waypoint('left')
     maxQ_action('forward')
-
-
 
     plt.subplot(1, 2, 2)
 
@@ -231,7 +229,7 @@ if True:
 
 
 
-#Count entries of Q policy textfile
+#Explore entries of Q policy textfile version 1
 if False:
 
     f = open('sim_improved-learning.txt', 'r')
@@ -266,7 +264,6 @@ if False:
 
     print sample[0]
 
-
 if False:
     j=1
     for s in sample:
@@ -277,6 +274,49 @@ if False:
                 print '    ' + e
         print ""
         j += 1
+
+
+#Explore entries of Q policy textfile version 2
+if True:
+
+    f = open('sim_improved-learning.txt', 'r')
+    span = len(f.readlines())
+    #span = 5
+    f.seek(0)
+    state_maxQ_list = []
+    for i in range(span):
+        tmp_entry = []
+        str_line = f.readline()
+
+
+        if "('" in str_line:
+            lst1 = []
+            lst2 = []
+            for i in range(4):
+                tmpl = f.readline()
+                if '--' in tmpl:
+                    pos1 = tmpl.find('--')
+                    pos2 = tmpl.find(':')
+                    act_def = tmpl[pos1 + 3:pos2 - 1]
+                    act_val = tmpl[pos2 + 2:-1]
+                    lst1.append(act_def)
+                    lst2.append(act_val)
+            index, value = max(enumerate(lst2), key=operator.itemgetter(1))
+            e1 = eval(str_line.rstrip())
+            e2 = zip(lst1, lst2)
+            e3 = lst1[index]
+            tmp_entry.append(e1)
+            tmp_entry.append(e2)
+            tmp_entry.append(e3)
+            state_maxQ_list.append(tmp_entry)
+
+    sample = random.sample(state_maxQ_list,1)
+    print "\nRandom sample:\n"
+    print sample[0][0]
+    print sample[0][2]
+
+
+
 
 
 
