@@ -3,6 +3,42 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 
+#Extract a random sample from Q-table
+def qtable_sample(fname,nsamples):
+
+    f = open(fname, 'r')
+    span = len(f.readlines())
+    f.seek(0)
+    state_maxQ_list = []
+    for i in range(span):
+        tmp_entry = []
+        str_line = f.readline()
+        if "('" in str_line:
+            lst1 = []
+            lst2 = []
+            for i in range(4):
+                tmpl = f.readline()
+                if '--' in tmpl:
+                    pos1 = tmpl.find('--')
+                    pos2 = tmpl.find(':')
+                    act_def = tmpl[pos1 + 3:pos2 - 1]
+                    act_val = tmpl[pos2 + 2:-1]
+                    lst1.append(act_def)
+                    lst2.append(act_val)
+            index, value = max(enumerate(lst2), key=operator.itemgetter(1))
+            state = eval(str_line.rstrip())
+            wypt = state[0]
+            inps = (state[1],state[2],state[3])
+            acts = zip(lst1, lst2)
+            maxq_act = lst1[index]
+            tmp_entry.append(wypt)
+            tmp_entry.append(inps)
+            tmp_entry.append(acts)
+            tmp_entry.append(maxq_act)
+            state_maxQ_list.append(tmp_entry)
+
+    return random.sample(state_maxQ_list,nsamples)
+
 #Plotting functions
 def create_canvas(axlabels):
     # frame
@@ -228,92 +264,13 @@ if False:
     plt.show()
 
 
-
-#Explore entries of Q policy textfile version 1
-if False:
-
-    f = open('sim_improved-learning.txt', 'r')
-    span = len(f.readlines())
-    f.seek(0)
-    state_maxQ_list = []
-    for i in range(span):
-        tmp_entry = []
-        str_line = f.readline()
-        if "('" in str_line:
-            lst1 = []
-            lst2 = []
-            for i in range(4):
-                tmpl = f.readline()
-                if '--' in tmpl:
-                    pos1 = tmpl.find('--')
-                    pos2 = tmpl.find(':')
-                    act_def = tmpl[pos1 + 3:pos2 - 1]
-                    act_val = tmpl[pos2 + 2:-1]
-                    lst1.append(act_def)
-                    lst2.append(act_val)
-            index, value = max(enumerate(lst2), key=operator.itemgetter(1))
-            e1 = "State = {}".format(str_line.rstrip())
-            e2 = "Available actions = {}".format(zip(lst1, lst2))
-            e3 = "MaxQ action = {}".format(lst1[index])
-            tmp_entry.append(e1)
-            tmp_entry.append(e2)
-            tmp_entry.append(e3)
-            state_maxQ_list.append(tmp_entry)
-
-    sample = random.sample(state_maxQ_list,10)
-
-    print sample[0]
-
-if False:
-    j=1
-    for s in sample:
-        for e in s:
-            if e[0] == 'S':
-                print '{}. '.format(j) + e
-            else:
-                print '    ' + e
-        print ""
-        j += 1
+def create_qsample_fig(obs):
+    create_canvas('on')
 
 
-#Explore entries of Q policy textfile version 2
-if True:
-
-    f = open('sim_improved-learning.txt', 'r')
-    span = len(f.readlines())
-    #span = 5
-    f.seek(0)
-    state_maxQ_list = []
-    for i in range(span):
-        tmp_entry = []
-        str_line = f.readline()
-
-
-        if "('" in str_line:
-            lst1 = []
-            lst2 = []
-            for i in range(4):
-                tmpl = f.readline()
-                if '--' in tmpl:
-                    pos1 = tmpl.find('--')
-                    pos2 = tmpl.find(':')
-                    act_def = tmpl[pos1 + 3:pos2 - 1]
-                    act_val = tmpl[pos2 + 2:-1]
-                    lst1.append(act_def)
-                    lst2.append(act_val)
-            index, value = max(enumerate(lst2), key=operator.itemgetter(1))
-            e1 = eval(str_line.rstrip())
-            e2 = zip(lst1, lst2)
-            e3 = lst1[index]
-            tmp_entry.append(e1)
-            tmp_entry.append(e2)
-            tmp_entry.append(e3)
-            state_maxQ_list.append(tmp_entry)
-
-    sample = random.sample(state_maxQ_list,1)
-    print "\nRandom sample:\n"
-    print sample[0][0]
-    print sample[0][2]
+#state = (waypoint, inputs['light'], inputs['oncoming'], inputs['left'], inputs['right'])
+sample = qtable_sample('sim_improved-learning.txt',5)
+print sample[0]
 
 
 
