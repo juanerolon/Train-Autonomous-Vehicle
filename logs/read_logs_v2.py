@@ -203,7 +203,7 @@ def maxQ_action(action):
 #Test functions above:
 if True:
 
-    plt.figure(1,figsize=(6, 6))
+    plt.figure(1,figsize=(12, 6))
 
     plt.subplot(1, 2, 1)
 
@@ -211,7 +211,7 @@ if True:
     traffic_light('green')
     percept_input('left')
     oncoming_traffic('right')
-    waypoint('right')
+    waypoint('left')
     maxQ_action('forward')
 
 
@@ -220,10 +220,10 @@ if True:
 
     create_canvas('on')
     traffic_light('red')
-    percept_input('left')
-    oncoming_traffic('right')
+    percept_input('right')
+    oncoming_traffic('left')
     waypoint('right')
-    maxQ_action('forward')
+    maxQ_action('left')
 
 
     plt.tight_layout()
