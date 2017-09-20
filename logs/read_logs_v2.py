@@ -3,66 +3,17 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-#Count entries of Q policy textfile
-
-f = open('sim_improved-learning.txt', 'r')
-span = len(f.readlines())
-f.seek(0)
-state_maxQ_list = []
-for i in range(span):
-    tmp_entry = []
-    str_line = f.readline()
-    if "('" in str_line:
-        lst1 = []
-        lst2 = []
-        for i in range(4):
-            tmpl = f.readline()
-            if '--' in tmpl:
-                pos1 = tmpl.find('--')
-                pos2 = tmpl.find(':')
-                act_def = tmpl[pos1 + 3:pos2 - 1]
-                act_val = tmpl[pos2 + 2:-1]
-                lst1.append(act_def)
-                lst2.append(act_val)
-        index, value = max(enumerate(lst2), key=operator.itemgetter(1))
-        e1 = "State = {}".format(str_line.rstrip())
-        e2 = "Available actions = {}".format(zip(lst1, lst2))
-        e3 = "MaxQ action = {}".format(lst1[index])
-        tmp_entry.append(e1)
-        tmp_entry.append(e2)
-        tmp_entry.append(e3)
-        state_maxQ_list.append(tmp_entry)
-
-sample = random.sample(state_maxQ_list,10)
-j=1
-for s in sample:
-    for e in s:
-        if e[0] == 'S':
-            print '{}. '.format(j) + e
-        else:
-            print '    ' + e
-    print ""
-    j += 1
-
-
-#Plotting cartoons
-
-
+#Plotting functions
 def create_canvas(axlabels):
     # frame
-    ax = plt.axes()
+    plt.plot()
     plt.xlim(-1.2, 1.2)
     plt.ylim(-0.8, 1.8)
-
+    # show axis (off, on)
+    plt.axis(axlabels)
     # intersection point
     intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False, linestyle='dashed')
     plt.gca().add_patch(intersect)
-
-    # show axis (off, on)
-    ax.axis(axlabels)
-
-    return ax
 
 def traffic_light(light_color):
 
@@ -108,7 +59,7 @@ def percept_input(input):
         raise Exception('Invalid percept input')
 
 
-def oncoming_traffic(ax, direction):
+def oncoming_traffic(direction):
 
     if direction == 'left':
 
@@ -117,7 +68,7 @@ def oncoming_traffic(ax, direction):
         yi = 0.5
         dx = 0.4
         dy = 0.0
-        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
         plt.text(-0.8,0.6,'Oncoming left', rotation='horizontal', fontsize='9')
 
     elif direction == 'forward':
@@ -127,7 +78,7 @@ def oncoming_traffic(ax, direction):
         yi = 1.2
         dx = 0.0
         dy = -0.4
-        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
         plt.text(-0.05,1.5,'Oncoming forward', rotation='vertical', fontsize='9')
 
     elif direction == 'right':
@@ -137,7 +88,7 @@ def oncoming_traffic(ax, direction):
         yi = 0.5
         dx = -0.4
         dy = 0.0
-        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
         plt.text(0.45,0.6,'Oncoming right',fontsize='9')
 
     elif direction == None or 'None':
@@ -153,7 +104,7 @@ def waypoint(direction):
         yi = -0.5
         dx = 0.0
         dy = 0.3
-        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
         plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
 
 
@@ -164,13 +115,13 @@ def waypoint(direction):
         yi = -0.5
         dx = 0.0
         dy = 0.15
-        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
         # ---- tip
         xi2 = 0.05
         yi2 = -0.3
         dx2 = 0.1
         dy2 = 0.0
-        ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
         plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
 
     #waypoint left
@@ -180,13 +131,13 @@ def waypoint(direction):
         yi = -0.5
         dx = 0.0
         dy = 0.15
-        ax.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.arrow(xi, yi, dx,dy, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
         # ---- tip
         xi2 = 0.05
         yi2 = -0.3
         dx2 = -0.1
         dy2 = 0.0
-        ax.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
+        plt.arrow(xi2, yi2, dx2,dy2, head_width=0.04, head_length=0.05, fc='k', ec='k',linestyle='solid',linewidth=3.5)
         plt.text(-0.1,-0.6,'Waypoint',fontsize='9',fontweight='bold')
 
     elif direction == None or 'None':
@@ -207,7 +158,7 @@ def maxQ_action(action):
         yi = 1.35
         dx = 0.0
         dy = 0.3
-        ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
 
     # maxQ action left
@@ -216,12 +167,12 @@ def maxQ_action(action):
         yi = 1.35
         dx = 0.0
         dy = 0.15
-        ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
         xi2 = 0.7
         yi2 = 1.55
         dx2 = -0.1
         dy2 = 0.0
-        ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+        plt.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
                  linewidth=3.5)
 
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
@@ -232,12 +183,12 @@ def maxQ_action(action):
         yi = 1.35
         dx = 0.0
         dy = 0.15
-        ax.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
+        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid', linewidth=3.5)
         xi2 = 0.7
         yi2 = 1.55
         dx2 = 0.1
         dy2 = 0.0
-        ax.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+        plt.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
                  linewidth=3.5)
 
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
@@ -249,13 +200,84 @@ def maxQ_action(action):
     else:
         raise Exception('Invalid maxQ action')
 
-ax = create_canvas('on')
-traffic_light('green')
-percept_input('left')
-oncoming_traffic(ax, 'right')
-waypoint('right')
-maxQ_action('forward')
+#Test functions above:
+if True:
+
+    plt.figure(1,figsize=(6, 6))
+
+    plt.subplot(1, 2, 1)
+
+    create_canvas('on')
+    traffic_light('green')
+    percept_input('left')
+    oncoming_traffic('right')
+    waypoint('right')
+    maxQ_action('forward')
 
 
-plt.show()
+
+    plt.subplot(1, 2, 2)
+
+    create_canvas('on')
+    traffic_light('red')
+    percept_input('left')
+    oncoming_traffic('right')
+    waypoint('right')
+    maxQ_action('forward')
+
+
+    plt.tight_layout()
+    plt.show()
+
+
+
+#Count entries of Q policy textfile
+if False:
+
+    f = open('sim_improved-learning.txt', 'r')
+    span = len(f.readlines())
+    f.seek(0)
+    state_maxQ_list = []
+    for i in range(span):
+        tmp_entry = []
+        str_line = f.readline()
+        if "('" in str_line:
+            lst1 = []
+            lst2 = []
+            for i in range(4):
+                tmpl = f.readline()
+                if '--' in tmpl:
+                    pos1 = tmpl.find('--')
+                    pos2 = tmpl.find(':')
+                    act_def = tmpl[pos1 + 3:pos2 - 1]
+                    act_val = tmpl[pos2 + 2:-1]
+                    lst1.append(act_def)
+                    lst2.append(act_val)
+            index, value = max(enumerate(lst2), key=operator.itemgetter(1))
+            e1 = "State = {}".format(str_line.rstrip())
+            e2 = "Available actions = {}".format(zip(lst1, lst2))
+            e3 = "MaxQ action = {}".format(lst1[index])
+            tmp_entry.append(e1)
+            tmp_entry.append(e2)
+            tmp_entry.append(e3)
+            state_maxQ_list.append(tmp_entry)
+
+    sample = random.sample(state_maxQ_list,10)
+
+    print sample[0]
+
+
+if False:
+    j=1
+    for s in sample:
+        for e in s:
+            if e[0] == 'S':
+                print '{}. '.format(j) + e
+            else:
+                print '    ' + e
+        print ""
+        j += 1
+
+
+
 
