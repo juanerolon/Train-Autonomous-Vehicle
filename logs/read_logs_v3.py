@@ -257,15 +257,12 @@ def act_policy_figure(observation):
 
 
 # Test figures generated from output from sample qtable
-
-sample = qtable_sample('sim_improved-learning.txt', 5)
-
-plt.figure(1, figsize=(16, 5))
-plt.subplot(1, 3, 1)
-act_policy_figure(sample[0])
-plt.subplot(1, 3, 2)
-act_policy_figure(sample[1])
-plt.subplot(1, 3, 3)
-act_policy_figure(sample[2])
-plt.tight_layout()
+sample = qtable_sample('sim_improved-learning.txt', 6)
+plt.figure(1, figsize=(15, 8))
+nrows = 2
+ncols = 3
+for fig_num, observation in enumerate(sample):
+    plt.subplot(nrows, ncols, fig_num+1)
+    act_policy_figure(observation)
+    plt.tight_layout()
 plt.show()
