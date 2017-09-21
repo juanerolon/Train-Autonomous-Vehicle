@@ -1,14 +1,19 @@
+
+#The following script creates a symbolic representation of the Q-table entries
+#represented in the provided text file corresponding to the output of the improved Q-learning
+#algorithm
+#author: @J.E. Rolon
+
 import operator
 import random
 import matplotlib.pyplot as plt
-
 
 # ******************* Extract a random sample from Q-table *******************
 def qtable_sample(fname, nsamples):
     """Input filename of textfile storing qtable. Number of samples requested
        Returns a sample of observations from the q-table. Each observation is
        a dictionary specifying the observed state, the input percepts and the
-       action that maximizes the Q value. @J.E. Rolon
+       action that maximizes the Q value.
     """
     f = open(fname, 'r')
     span = len(f.readlines())
@@ -154,8 +159,8 @@ def percept_input_oncoming(direction):
         plt.text(-0.8, 0.6, 'Oncoming left', rotation='horizontal', fontsize='9')
     elif direction == 'forward':
         # oncoming forward
-        plt.arrow(0.05, 1.2, 0.0, -0.4, head_width=0.04, head_length=0.05, fc='b', ec='b')
-        plt.text(-0.05, 1.25, 'Oncoming forward', rotation='vertical', fontsize='9')
+        plt.arrow(0.05, 1.3, 0.0, -0.45, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.text(-0.05, 1.55, 'Oncoming forward', rotation='vertical', fontsize='9')
     elif direction == 'right':
         # oncoming right
         plt.arrow(0.9, 0.5, -0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
