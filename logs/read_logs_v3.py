@@ -1,12 +1,57 @@
 import operator
 import random
-import numpy as np
 import matplotlib.pyplot as plt
 
 
-# Plotting functions
+# ******************* Extract a random sample from Q-table *******************
+def qtable_sample(fname, nsamples):
+    """Input filename of textfile storing qtable. Number of samples requested
+       Returns a sample of observations from the q-table. Each observation is
+       a dictionary specifying the observed state, the input percepts and the
+       action that maximizes the Q value. @J.E. Rolon
+    """
+    f = open(fname, 'r')
+    span = len(f.readlines())
+    f.seek(0)
+    state_maxQ_ldicts = []
+    for i in range(span):
+        tmp_dict = {}
+        str_line = f.readline()
+        if "('" in str_line:
+            lst1 = []
+            lst2 = []
+            for i in range(4):
+                tmpl = f.readline()
+                if '--' in tmpl:
+                    pos1 = tmpl.find('--')
+                    pos2 = tmpl.find(':')
+                    act_def = tmpl[pos1 + 3:pos2 - 1]
+                    act_val = tmpl[pos2 + 2:-1]
+                    lst1.append(act_def)
+                    lst2.append(act_val)
+            index, value = max(enumerate(lst2), key=operator.itemgetter(1))
+            state = eval(str_line.rstrip())
+            wypt = state[0]
+            inps = (state[1], state[2], state[3], state[4])
+            acts = zip(lst1, lst2)
+            maxq_act = lst1[index]
+            tmp_dict['waypoint'] = wypt
+            tmp_dict['inp_light'] = inps[0]
+            tmp_dict['inp_left'] = inps[1]
+            tmp_dict['inp_oncoming'] = inps[2]
+            tmp_dict['inp_right'] = inps[3]
+            tmp_dict['avail_actions'] = acts
+            tmp_dict['maxQaction'] = maxq_act
+            state_maxQ_ldicts.append(tmp_dict)
+
+    return random.sample(state_maxQ_ldicts, nsamples)
+
+# *************************** Plotting functions **********************************************
+#
+# The following set of functions encapsulate different objects representing the elements of the
+# the Q-table. Together generate a figure representing the state, input percepts and action taken.
 def create_canvas(axlabels):
-    # frame
+    """Defines the figure frame dimensions and axis specs"""
     plt.plot()
     plt.xlim(-1.2, 1.2)
     plt.ylim(-0.8, 1.8)
@@ -15,60 +60,33 @@ def create_canvas(axlabels):
     plt.xticks([])
     plt.yticks([])
 
-
 def intersection_point():
-    # intersection point
+    """Generates a circle specifying the intersection point location"""
     intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False, linestyle='dashed')
     return plt.gca().add_patch(intersect)
 
-
 def percept_traffic_light(light_color):
+    """Creates a representation of the traffic light states. Input current light color"""
     if light_color == 'green':
-
         # green traffic light
         circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='lime')
         plt.gca().add_patch(circle)
-
         # red traffic light
         circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='gray', linestyle='dashed', fill=False)
         plt.gca().add_patch(circle2)
-
     elif light_color == 'red':
-
         # green traffic light
         circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='gray', linestyle='dashed', fill=False)
         plt.gca().add_patch(circle)
-
         # red traffic light
         circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='r')
         plt.gca().add_patch(circle2)
     else:
         raise Exception('Invalid traffic light state')
 
-
-def percept_input(input):
-    if input == 'left':
-        # input left
-        plt.plot((-0.7, -0.3), (-0.2, -0.2), lw=2, color='gray', clip_on=True, linestyle='dashed')
-        plt.text(-0.65, -0.15, 'Input left', rotation='horizontal', fontsize='9', color='gray')
-    elif input == 'right':
-        # input right
-        plt.plot((0.4, 0.8), (-0.2, -0.2), lw=2, color='gray', clip_on=True, linestyle='dashed')
-        plt.text(0.45, -0.15, 'Input right', rotation='horizontal', fontsize='9', color='gray')
-    elif input == 'forward':
-        # input forward
-        plt.plot((0.05, 0.05), (0.0, 0.45), lw=2, color='gray', clip_on=True, linestyle='dashed')
-        plt.text(-0.05, 0.40, 'Input foward', rotation='vertical', fontsize='9', color='gray')
-    elif input == None or 'None':
-        pass
-    else:
-        raise Exception('Invalid percept input')
-
-
 def percept_input_left(input):
     if input == 'right':
         # input left
-
         plt.arrow(-0.7, -0.2, 0.15, 0.0, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
                   linestyle='dashed')
         plt.arrow(-0.5, -0.2, 0.0, -0.15, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
@@ -90,7 +108,6 @@ def percept_input_left(input):
         pass
     else:
         raise Exception('Invalid percept input')
-
 
 def percept_input_right(input):
     if input == 'left':
@@ -118,7 +135,6 @@ def percept_input_right(input):
     else:
         raise Exception('Invalid percept input')
 
-
 def percept_input_oncoming(direction):
     if direction == 'left':
         # oncoming left
@@ -136,7 +152,6 @@ def percept_input_oncoming(direction):
         pass
     else:
         raise Exception('Invalid oncomming traffic percept')
-
 
 def waypoint(direction):
     # waypoint foward
@@ -159,7 +174,6 @@ def waypoint(direction):
         pass
     else:
         raise Exception('Invalid waypoint percept')
-
 
 def maxQ_action(action):
     # maxQ action enclosing rectangle
@@ -197,54 +211,6 @@ def maxQ_action(action):
     else:
         raise Exception('Invalid maxQ action')
 
-# Extract a random sample from Q-table
-def qtable_sample(fname, nsamples):
-    f = open(fname, 'r')
-    span = len(f.readlines())
-    f.seek(0)
-    state_maxQ_list = []
-    state_maxQ_ldicts = []
-    for i in range(span):
-        tmp_entry = []
-        tmp_dict = {}
-        str_line = f.readline()
-        if "('" in str_line:
-            lst1 = []
-            lst2 = []
-            for i in range(4):
-                tmpl = f.readline()
-                if '--' in tmpl:
-                    pos1 = tmpl.find('--')
-                    pos2 = tmpl.find(':')
-                    act_def = tmpl[pos1 + 3:pos2 - 1]
-                    act_val = tmpl[pos2 + 2:-1]
-                    lst1.append(act_def)
-                    lst2.append(act_val)
-            index, value = max(enumerate(lst2), key=operator.itemgetter(1))
-            state = eval(str_line.rstrip())
-            wypt = state[0]
-            inps = (state[1], state[2], state[3], state[4])
-            acts = zip(lst1, lst2)
-            maxq_act = lst1[index]
-            tmp_entry.append(wypt)
-            tmp_entry.append(inps)
-            tmp_entry.append(acts)
-            tmp_entry.append(maxq_act)
-
-            tmp_dict['waypoint'] = wypt
-            tmp_dict['inp_light'] = inps[0]
-            tmp_dict['inp_left'] = inps[1]
-            tmp_dict['inp_oncoming'] = inps[2]
-            tmp_dict['inp_right'] = inps[3]
-            tmp_dict['avail_actions'] = acts
-            tmp_dict['maxQaction'] = maxq_act
-
-            state_maxQ_list.append(tmp_entry)
-            state_maxQ_ldicts.append(tmp_dict)
-
-    return random.sample(state_maxQ_ldicts, nsamples)
-
-
 def act_policy_figure(observation):
     create_canvas('on')
     intersection_point()
@@ -255,8 +221,7 @@ def act_policy_figure(observation):
     percept_traffic_light(observation['inp_light'])
     maxQ_action(observation['maxQaction'])
 
-
-# Test figures generated from output from sample qtable
+# Generate policy observations
 sample = qtable_sample('sim_improved-learning.txt', 6)
 plt.figure(1, figsize=(15, 8))
 nrows = 2
