@@ -85,6 +85,10 @@ def percept_traffic_light(light_color):
         raise Exception('Invalid traffic light state')
 
 def percept_input_left(input):
+    """Represents the input percept and direction of a potential vehicle approaching from the LEFT
+       valid inputs: approaching vehicle turning right, turning left,  moving forward.
+       Percepts as observed from agent. Turns represented respect to approaching vehicle.
+    """
     if input == 'right':
         # input left
         plt.arrow(-0.7, -0.2, 0.15, 0.0, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
@@ -110,6 +114,10 @@ def percept_input_left(input):
         raise Exception('Invalid percept input')
 
 def percept_input_right(input):
+    """Represents the input percept and direction of a potential vehicle approaching from the RIGHT
+       valid inputs: approaching vehicle turning right, turning left,  moving forward.
+       Percepts as observed from agent. Turns represented respect to approaching vehicle.
+    """
     if input == 'left':
         # input left
         plt.arrow(0.9, -0.2, -0.15, 0.0, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
@@ -136,6 +144,10 @@ def percept_input_right(input):
         raise Exception('Invalid percept input')
 
 def percept_input_oncoming(direction):
+    """Represents the input percept of actual oncoming traffic approaching.
+       Valid inputs: oncoming traffic from left, forward or right dirrection.
+       Percepts taken from perspective of agent.
+    """
     if direction == 'left':
         # oncoming left
         plt.arrow(-0.8, 0.5, 0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
@@ -154,6 +166,10 @@ def percept_input_oncoming(direction):
         raise Exception('Invalid oncomming traffic percept')
 
 def waypoint(direction):
+    """Represents the current waypoint of agent.
+       Valid inputs: waypoint turning left, right or moving forward
+       Percept taken from perspective of agent.
+    """
     # waypoint foward
     if direction == 'forward':
         plt.arrow(0.05, -0.5, 0.0, 0.3, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
@@ -176,6 +192,7 @@ def waypoint(direction):
         raise Exception('Invalid waypoint percept')
 
 def maxQ_action(action):
+    """Writes a message text indicating the action that maximizes Q given the observed percepts"""
     # maxQ action enclosing rectangle
     maxq_rect = plt.Rectangle((0.45, 1.2), 0.5, 0.55, fill=False)
     plt.gca().add_patch(maxq_rect)
@@ -212,6 +229,7 @@ def maxQ_action(action):
         raise Exception('Invalid maxQ action')
 
 def act_policy_figure(observation):
+    """Generates a figure representation of the Q-table entry or policy observation"""
     create_canvas('on')
     intersection_point()
     waypoint(observation['waypoint'])
@@ -221,7 +239,7 @@ def act_policy_figure(observation):
     percept_traffic_light(observation['inp_light'])
     maxQ_action(observation['maxQaction'])
 
-# Generate policy observations
+# Generate a set of policy observations extracted from Q-table
 sample = qtable_sample('sim_improved-learning.txt', 6)
 plt.figure(1, figsize=(15, 8))
 nrows = 2
