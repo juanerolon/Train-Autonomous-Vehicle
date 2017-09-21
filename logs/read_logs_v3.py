@@ -121,35 +121,17 @@ def percept_input_right(input):
 
 def percept_input_oncoming(direction):
     if direction == 'left':
-
         # oncoming left
-        xi = -0.8
-        yi = 0.5
-        dx = 0.4
-        dy = 0.0
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.arrow(-0.8, 0.5, 0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
         plt.text(-0.8, 0.6, 'Oncoming left', rotation='horizontal', fontsize='9')
-
     elif direction == 'forward':
-
         # oncoming forward
-        xi = 0.05
-        yi = 1.2
-        dx = 0.0
-        dy = -0.4
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.arrow(0.05, 1.2, 0.0, -0.4, head_width=0.04, head_length=0.05, fc='b', ec='b')
         plt.text(-0.05, 1.25, 'Oncoming forward', rotation='vertical', fontsize='9')
-
     elif direction == 'right':
-
         # oncoming right
-        xi = 0.9
-        yi = 0.5
-        dx = -0.4
-        dy = 0.0
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.arrow(0.9, 0.5, -0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
         plt.text(0.45, 0.6, 'Oncoming right', fontsize='9')
-
     elif direction == None or 'None':
         pass
     else:
@@ -159,45 +141,17 @@ def percept_input_oncoming(direction):
 def waypoint(direction):
     # waypoint foward
     if direction == 'forward':
-        xi = 0.05
-        yi = -0.5
-        dx = 0.0
-        dy = 0.3
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
+        plt.arrow(0.05, -0.5, 0.0, 0.3, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
         plt.text(-0.1, -0.6, 'Waypoint', fontsize='9', fontweight='bold')
-
-
     # waypoint right
     elif direction == 'right':
-        # ---- base
-        xi = 0.05
-        yi = -0.5
-        dx = 0.0
-        dy = 0.15
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
-        # ---- tip
-        xi2 = 0.05
-        yi2 = -0.3
-        dx2 = 0.1
-        dy2 = 0.0
-        plt.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid',
+        plt.arrow(0.05, -0.5, 0.0, 0.15, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
+        plt.arrow(0.05, -0.3, 0.1, 0.0, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid',
                   linewidth=3.5)
         plt.text(-0.1, -0.6, 'Waypoint', fontsize='9', fontweight='bold')
-
-    # waypoint left
     elif direction == 'left':
-        # ---- base
-        xi = 0.05
-        yi = -0.5
-        dx = 0.0
-        dy = 0.15
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
-        # ---- tip
-        xi2 = 0.05
-        yi2 = -0.3
-        dx2 = -0.1
-        dy2 = 0.0
-        plt.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid',
+        plt.arrow(0.05, -0.5, 0.0, 0.15, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
+        plt.arrow(0.05, -0.3, -0.1, 0.0, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid',
                   linewidth=3.5)
         plt.text(-0.1, -0.6, 'Waypoint', fontsize='9', fontweight='bold')
 
@@ -214,48 +168,26 @@ def maxQ_action(action):
 
     # maxQ action forward
     if action == 'forward':
-        xi = 0.7
-        yi = 1.35
-        dx = 0.0
-        dy = 0.3
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+        plt.arrow(0.7, 1.35, 0.0, 0.3, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
                   linewidth=3.5)
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
 
     # maxQ action left
     elif action == 'left':
-        xi = 0.7
-        yi = 1.35
-        dx = 0.0
-        dy = 0.15
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+        plt.arrow(0.7, 1.35, 0.0, 0.15, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
                   linewidth=3.5)
-        xi2 = 0.7
-        yi2 = 1.55
-        dx2 = -0.1
-        dy2 = 0.0
-        plt.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen',
+        plt.arrow(0.7, 1.55, -0.1, 0.0, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen',
                   linestyle='solid',
                   linewidth=3.5)
-
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
 
     # maxQ action right
     elif action == 'right':
-        xi = 0.7
-        yi = 1.35
-        dx = 0.0
-        dy = 0.15
-        plt.arrow(xi, yi, dx, dy, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+        plt.arrow(0.7, 1.35, 0.0, 0.15, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
                   linewidth=3.5)
-        xi2 = 0.7
-        yi2 = 1.55
-        dx2 = 0.1
-        dy2 = 0.0
-        plt.arrow(xi2, yi2, dx2, dy2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen',
+        plt.arrow(0.7, 1.55, 0.1, 0.0, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen',
                   linestyle='solid',
                   linewidth=3.5)
-
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
 
     # maxQ action None (idle)
@@ -264,7 +196,6 @@ def maxQ_action(action):
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
     else:
         raise Exception('Invalid maxQ action')
-
 
 # Extract a random sample from Q-table
 def qtable_sample(fname, nsamples):
