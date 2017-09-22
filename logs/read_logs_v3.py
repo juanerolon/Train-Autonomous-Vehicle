@@ -42,8 +42,8 @@ def qtable_sample(fname, nsamples):
             maxq_act = lst1[index]
             tmp_dict['waypoint'] = wypt
             tmp_dict['inp_light'] = inps[0]
-            tmp_dict['inp_left'] = inps[1]
-            tmp_dict['inp_oncoming'] = inps[2]
+            tmp_dict['inp_oncoming'] = inps[1]
+            tmp_dict['inp_left'] = inps[2]
             tmp_dict['inp_right'] = inps[3]
             tmp_dict['avail_actions'] = acts
             tmp_dict['maxQaction'] = maxq_act
@@ -137,7 +137,6 @@ def percept_input_right(input):
         plt.text(0.65, -0.15, 'Input rigth: left', rotation='horizontal', fontsize='9', color='gray')
     elif input == 'right':
         # input right
-        print 'X'
         plt.arrow(0.9, -0.2, -0.15, 0.0, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
                   linestyle='dashed')
         plt.arrow(0.7, -0.2, 0.0, 0.15, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
@@ -194,7 +193,7 @@ def waypoint(direction):
         plt.arrow(0.05, -0.5, 0.0, 0.15, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid', linewidth=3.5)
         plt.arrow(0.05, -0.3, -0.1, 0.0, head_width=0.04, head_length=0.05, fc='k', ec='k', linestyle='solid',
                   linewidth=3.5)
-        plt.text(-0.1, -0.6, 'Waypoint', fontsize='9', fontweight='bold')
+        plt.text(-0.1, -0.6, 'Next Waypoint', fontsize='9', fontweight='bold')
 
     elif direction == None or 'None':
         pass
@@ -251,9 +250,18 @@ def legended_description(obs):
     fs = 8
     xpos = 0.4
     ypos = 1.1
-    plt.text(xpos-0.1, ypos, '(Action, MaxQ) chosen from:', rotation='horizontal', fontsize=fs,color='blue')
+
+    plt.text(xpos-0.1, ypos, '(Action, Q value) chosen from:', rotation='horizontal', fontsize=fs,color='blue')
     for i, act in enumerate(obs['avail_actions']):
         plt.text(xpos+0.1, (ypos-0.1)-i*0.1, act, rotation='horizontal', fontsize=fs,color='blue')
+
+    state_descr = ('waypoint', 'inpup_light', 'input_oncoming', 'input_left', 'input_right')
+    state_componets = (obs['waypoint'], obs['inp_light'], obs['inp_oncoming'], obs['inp_left'], obs['inp_right'])
+    plt.text(xpos - 1.55, ypos, 'State description:', rotation='horizontal', fontsize=fs, color='blue')
+    for j, component in enumerate(state_componets):
+        plt.text(xpos - 1.55, (ypos - 0.1) - j * 0.1, state_descr[j]+': '+str(component), rotation='horizontal', fontsize=fs, color='blue')
+
+
 
 def act_policy_figure(observation):
     """Generates a figure representation of the Q-table entry or policy observation"""
