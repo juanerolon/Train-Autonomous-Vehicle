@@ -67,25 +67,30 @@ def create_canvas(axlabels):
 
 def intersection_point():
     """Generates a circle specifying the intersection point location"""
-    intersect = plt.Circle((0.05, 0.55), radius=0.05, fc='k', fill=False, linestyle='dashed')
+    intersect = plt.Circle((0.05, 0.3), radius=0.05, fc='k', fill=False, linestyle='dashed')
     return plt.gca().add_patch(intersect)
 
 def percept_traffic_light(light_color):
     """Creates a representation of the traffic light states. Input current light color"""
+    ypos = 1.6
+    xpos = -0.9
+    dx = 0.35
     if light_color == 'green':
         # green traffic light
-        circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='lime')
+        circle = plt.Circle((xpos, ypos), radius=0.15, fc='lime')
         plt.gca().add_patch(circle)
         # red traffic light
-        circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='gray', linestyle='dashed', fill=False)
+        circle2 = plt.Circle((xpos+dx, ypos), radius=0.15, fc='gray', linestyle='dashed', fill=False)
         plt.gca().add_patch(circle2)
+        plt.text(xpos, ypos-0.25, 'Traffic light', rotation='horizontal', fontsize='9')
     elif light_color == 'red':
         # green traffic light
-        circle = plt.Circle((-0.8, 1.5), radius=0.15, fc='gray', linestyle='dashed', fill=False)
+        circle = plt.Circle((xpos, ypos), radius=0.15, fc='gray', linestyle='dashed', fill=False)
         plt.gca().add_patch(circle)
         # red traffic light
-        circle2 = plt.Circle((-0.45, 1.5), radius=0.15, fc='r')
+        circle2 = plt.Circle((xpos+dx, ypos), radius=0.15, fc='r')
         plt.gca().add_patch(circle2)
+        plt.text(xpos, ypos - 0.25, 'Traffic light', rotation='horizontal', fontsize='9')
     else:
         raise Exception('Invalid traffic light state')
 
@@ -137,7 +142,7 @@ def percept_input_right(input):
                   linestyle='dashed')
         plt.arrow(0.7, -0.2, 0.0, 0.15, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
                   linestyle='dashed')
-        plt.text(0.65, -0.30, 'Input right: right', rotation='horizontal', fontsize='9', color='gray')
+        plt.text(0.6, -0.30, 'Input right: right', rotation='horizontal', fontsize='9', color='gray')
     elif input == 'forward':
         # input forward
         plt.arrow(0.9, -0.2, -0.3, 0.0, lw=2, head_width=0.04, head_length=0.05, fc='gray', ec='gray',
@@ -155,16 +160,16 @@ def percept_input_oncoming(direction):
     """
     if direction == 'left':
         # oncoming left
-        plt.arrow(-0.8, 0.5, 0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
-        plt.text(-0.8, 0.6, 'Oncoming left', rotation='horizontal', fontsize='9')
+        plt.arrow(-0.8, 0.3, 0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.text(-0.8, 0.35, 'Oncoming left', rotation='horizontal', fontsize='9')
     elif direction == 'forward':
         # oncoming forward
-        plt.arrow(0.05, 1.3, 0.0, -0.45, head_width=0.04, head_length=0.05, fc='b', ec='b')
-        plt.text(-0.05, 1.55, 'Oncoming forward', rotation='vertical', fontsize='9')
+        plt.arrow(0.05, 1.2, 0.0, -0.45, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.text(-0.05, 1.45, 'Oncoming forward', rotation='vertical', fontsize='9')
     elif direction == 'right':
         # oncoming right
-        plt.arrow(0.9, 0.5, -0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
-        plt.text(0.45, 0.6, 'Oncoming right', fontsize='9')
+        plt.arrow(0.9, 0.3, -0.4, 0.0, head_width=0.04, head_length=0.05, fc='b', ec='b')
+        plt.text(0.45, 0.35, 'Oncoming right', fontsize='9')
     elif direction == None or 'None':
         pass
     else:
@@ -199,14 +204,15 @@ def waypoint(direction):
 def maxQ_action(action):
     """Writes a message text indicating the action that maximizes Q given the observed percepts"""
     # maxQ action enclosing rectangle
-    maxq_rect = plt.Rectangle((0.45, 1.2), 0.5, 0.55, fill=False)
+    maxq_rect = plt.Rectangle((0.45, 1.2), 0.55, 0.55, fill=False)
     plt.gca().add_patch(maxq_rect)
-
+    fs = 9
     # maxQ action forward
     if action == 'forward':
-        plt.arrow(0.7, 1.35, 0.0, 0.3, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
+        plt.arrow(0.7, 1.35, 0.0, 0.2, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen', linestyle='solid',
                   linewidth=3.5)
-        plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+        plt.text(0.5, 1.25, 'MaxQ action', fontsize=fs, fontweight='bold', color='darkgreen')
+        plt.text(0.55, 1.65, 'Forward', fontsize=fs, fontweight='normal', color='darkgreen')
 
     # maxQ action left
     elif action == 'left':
@@ -215,7 +221,8 @@ def maxQ_action(action):
         plt.arrow(0.7, 1.55, -0.1, 0.0, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen',
                   linestyle='solid',
                   linewidth=3.5)
-        plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+        plt.text(0.5, 1.25, 'MaxQ action', fontsize=fs, fontweight='bold', color='darkgreen')
+        plt.text(0.6, 1.65, 'Left', fontsize=fs, fontweight='normal', color='darkgreen')
 
     # maxQ action right
     elif action == 'right':
@@ -224,14 +231,29 @@ def maxQ_action(action):
         plt.arrow(0.7, 1.55, 0.1, 0.0, head_width=0.04, head_length=0.05, fc='darkgreen', ec='darkgreen',
                   linestyle='solid',
                   linewidth=3.5)
-        plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+        plt.text(0.5, 1.25, 'MaxQ action', fontsize=fs, fontweight='bold', color='darkgreen')
+        plt.text(0.6, 1.65, 'Right', fontsize=fs, fontweight='normal', color='darkgreen')
 
     # maxQ action None (idle)
     elif action == None or 'None':
         plt.text(0.63, 1.45, 'Idle', fontsize='12', fontweight='bold', color='darkgreen')
         plt.text(0.5, 1.25, 'MaxQ action', fontsize='9', fontweight='bold', color='darkgreen')
+        plt.text(0.6, 1.65, 'None', fontsize=fs, fontweight='normal', color='darkgreen')
     else:
         raise Exception('Invalid maxQ action')
+
+#State = (waypoint, inputs['light'], inputs['oncoming'], inputs['left'], inputs['right'])
+#{'avail_actions': [('forward', '-0.44'), ('None', '0.19'), ('right', '-0.24'), ('left', '-0.24')],
+# 'inp_light': 'red', 'inp_left': 'forward', 'inp_right': None, 'inp_oncoming': 'forward',
+# 'waypoint': 'left', 'maxQaction': 'None'}
+
+def legended_description(obs):
+    fs = 8
+    xpos = 0.4
+    ypos = 1.1
+    plt.text(xpos-0.1, ypos, '(Action, MaxQ) chosen from:', rotation='horizontal', fontsize=fs,color='blue')
+    for i, act in enumerate(obs['avail_actions']):
+        plt.text(xpos+0.1, (ypos-0.1)-i*0.1, act, rotation='horizontal', fontsize=fs,color='blue')
 
 def act_policy_figure(observation):
     """Generates a figure representation of the Q-table entry or policy observation"""
@@ -243,6 +265,7 @@ def act_policy_figure(observation):
     percept_input_right(observation['inp_right'])
     percept_traffic_light(observation['inp_light'])
     maxQ_action(observation['maxQaction'])
+    legended_description(observation)
 
 # Generate a set of policy observations extracted from Q-table
 sample = qtable_sample('sim_improved-learning.txt', 6)
