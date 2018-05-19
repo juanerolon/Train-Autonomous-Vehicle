@@ -1,5 +1,7 @@
 
-# Training an Autonomous Vehicle using Reinforcement Learning
+# Training an Autonomous Vehicle using Reinforcement Learning  
+
+### Juan E. Rolon, 2018
 
 <img src="vehicle_dashboard.png"
      alt="sample_output"
