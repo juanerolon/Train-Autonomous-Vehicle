@@ -9,7 +9,7 @@
 
 ## Project overview
 
-In this project, I implemented an application of _Reinforcement Learning_ to develop a training simulator for an autonomous vehicle or smartcab. This project was submitted as part of the requisites required to obtain **Machine Learning** Engineer Nanodegree from Udacity. It also forms part of an **Artificial Intelligence** curriculum.
+In this project, I implemented an application of _Reinforcement Learning_ to develop a training simulator for an autonomous vehicle or smartcab. This project was submitted as part of the requisites to obtain the **Machine Learning** Engineer Nanodegree from Udacity. It also forms part of the **Artificial Intelligence** curriculum.
 
 Along with exploring state-of-the-art reinforcement learning techniques networks classification models, this project deals with important design decisions typically applicable in autonomous vehicle industry.   
 
